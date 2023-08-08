@@ -1459,9 +1459,9 @@ export class FASTNumberField extends FormAssociatedNumberField {
     // @internal
     connectedCallback(): void;
     // @internal
-    control: HTMLInputElement;
-    // @internal
     defaultSlottedNodes: Node[];
+    // @internal
+    field: HTMLInputElement;
     // @internal
     handleBlur(): void;
     // @internal
@@ -1716,10 +1716,10 @@ export class FASTSearch extends FormAssociatedSearch {
     protected autofocusChanged(): void;
     // @internal (undocumented)
     connectedCallback(): void;
-    // @internal
-    control: HTMLInputElement;
     // @internal (undocumented)
     defaultSlottedNodes: Node[];
+    // @internal
+    field: HTMLInputElement;
     // @internal
     handleChange(): void;
     handleClearInput(): void;
@@ -1743,8 +1743,6 @@ export class FASTSearch extends FormAssociatedSearch {
     readOnly: boolean;
     // (undocumented)
     protected readOnlyChanged(): void;
-    // @internal
-    root: HTMLDivElement;
     size: number;
     // (undocumented)
     protected sizeChanged(): void;
@@ -1988,10 +1986,10 @@ export class FASTTextArea extends FormAssociatedTextArea {
     // (undocumented)
     protected autofocusChanged(): void;
     cols: number;
-    // @internal
-    control: HTMLTextAreaElement;
     // @internal (undocumented)
     defaultSlottedNodes: Node[];
+    // @internal
+    field: HTMLTextAreaElement;
     formId: string;
     // @internal
     handleChange(): void;
@@ -2021,7 +2019,7 @@ export class FASTTextArea extends FormAssociatedTextArea {
 }
 
 // @internal
-export interface FASTTextArea extends DelegatesARIATextbox {
+export interface FASTTextArea extends StartEnd, DelegatesARIATextbox {
 }
 
 // Warning: (ae-different-release-tags) This symbol has another declaration with a different release tag
@@ -2035,10 +2033,10 @@ export class FASTTextField extends FormAssociatedTextField {
     protected autofocusChanged(): void;
     // @internal (undocumented)
     connectedCallback(): void;
-    // @internal
-    control: HTMLInputElement;
     // @internal (undocumented)
     defaultSlottedNodes: Node[];
+    // @internal
+    field: HTMLInputElement;
     // @internal
     handleChange(): void;
     // @internal
@@ -2484,8 +2482,8 @@ export function noninteractiveCalendarTemplate<T extends FASTCalendar>(options: 
 
 // @public
 export type NumberFieldOptions = StartEndOptions<FASTNumberField> & {
-    stepDownGlyph?: StaticallyComposableHTML<FASTNumberField>;
-    stepUpGlyph?: StaticallyComposableHTML<FASTNumberField>;
+    stepDownIcon?: StaticallyComposableHTML<FASTNumberField>;
+    stepUpIcon?: StaticallyComposableHTML<FASTNumberField>;
 };
 
 // @public
@@ -2608,7 +2606,9 @@ export const ScrollEasing: {
 export type ScrollEasing = ValuesOf<typeof ScrollEasing>;
 
 // @public
-export type SearchOptions = StartEndOptions<FASTSearch>;
+export type SearchOptions = StartEndOptions<FASTSearch> & {
+    clearIcon?: StaticallyComposableHTML<FASTSearch>;
+};
 
 // @public
 export function searchTemplate<T extends FASTSearch>(options?: SearchOptions): ElementViewTemplate<T>;
@@ -2708,7 +2708,7 @@ export const supportsElementInternals: boolean;
 
 // @public
 export type SwitchOptions = {
-    switch?: StaticallyComposableHTML<FASTSwitch>;
+    thumb?: StaticallyComposableHTML<FASTSwitch>;
 };
 
 // @public
@@ -2745,6 +2745,9 @@ export function tagFor(dependency: TemplateElementDependency): string;
 export type TemplateElementDependency = string | FASTElementDefinition | Constructable<FASTElement>;
 
 // @public
+export type TextAreaOptions = StartEndOptions;
+
+// @public
 export const TextAreaResize: {
     readonly none: "none";
     readonly both: "both";
@@ -2756,7 +2759,7 @@ export const TextAreaResize: {
 export type TextAreaResize = ValuesOf<typeof TextAreaResize>;
 
 // @public
-export function textAreaTemplate<T extends FASTTextArea>(): ElementViewTemplate<T>;
+export function textAreaTemplate<T extends FASTTextArea>(options?: TextAreaOptions): ElementViewTemplate<T>;
 
 // @public
 export type TextFieldOptions = StartEndOptions<FASTTextField>;

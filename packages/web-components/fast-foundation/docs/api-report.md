@@ -270,12 +270,12 @@ export function checkboxTemplate<T extends FASTCheckbox>(options?: CheckboxOptio
 
 // @public
 export interface ColumnDefinition {
-    cellFocusTargetCallback?: (cell: FASTDataGridCell) => HTMLElement;
+    cellFocusTargetCallback?: (cell: FASTDataGridCell) => HTMLElement | null;
     cellInternalFocusQueue?: boolean;
     cellTemplate?: ViewTemplate | SyntheticViewTemplate;
     columnDataKey: string;
     gridColumn?: string;
-    headerCellFocusTargetCallback?: (cell: FASTDataGridCell) => HTMLElement;
+    headerCellFocusTargetCallback?: (cell: FASTDataGridCell) => HTMLElement | null;
     headerCellInternalFocusQueue?: boolean;
     headerCellTemplate?: ViewTemplate | SyntheticViewTemplate;
     isRowHeader?: boolean;
@@ -417,6 +417,9 @@ export const DayFormat: {
 
 // @public
 export type DayFormat = ValuesOf<typeof DayFormat>;
+
+// @public (undocumented)
+export const defaultCellFocusTargetCallback: (cell: FASTDataGridCell) => HTMLElement | null;
 
 // Warning: (ae-different-release-tags) This symbol has another declaration with a different release tag
 // Warning: (ae-internal-mixed-release-tag) Mixed release tags are not allowed for "DelegatesARIAButton" because one of its declarations is marked as @internal
@@ -1022,7 +1025,7 @@ export class FASTDataGrid extends FASTElement {
     disconnectedCallback(): void;
     focusColumnIndex: number;
     focusRowIndex: number;
-    static generateColumns: (row: object) => ColumnDefinition[];
+    static generateColumns(row: object): ColumnDefinition[];
     generateHeader: GenerateHeaderOptions;
     gridTemplateColumns: string;
     // (undocumented)
@@ -1274,7 +1277,7 @@ export abstract class FASTListbox extends FASTElement {
     protected setSelectedOptions(): void;
     // @internal
     protected shouldSkipFocus: boolean;
-    static slottedOptionFilter: (n: HTMLElement) => boolean;
+    static slottedOptionFilter(n: HTMLElement): boolean;
     // @internal
     slottedOptions: Element[];
     // @internal
@@ -1567,7 +1570,7 @@ export class FASTPicker extends FormAssociatedPicker {
     // (undocumented)
     protected listItemTemplateChanged(): void;
     loadingText: string;
-    maxSelected: number | undefined;
+    maxSelected: number | null;
     // @internal
     menuConfig: AnchoredRegionConfig;
     // @internal
